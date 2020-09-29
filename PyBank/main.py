@@ -7,7 +7,8 @@ change = 867884
 change1 = 0
 change2 = 0
 change3 = 0
-
+mx = 0
+mn = 0
 #calculating count, total. Populating the list named chng[]
 import os
 import csv
@@ -39,28 +40,28 @@ with open(outputwrtr, "w", newline="") as datafile:
     writer.writerows(ziplistsfornewcsv)
 print("File write successful")
 
-#Creating functions that will determine the row where the max profit change, max loss change occur(not working as of 9/29 :-())
+#Creating functions that will determine the row where the max profit change, max loss change occur
 
 def grInc(number):
     with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv", mode='r') as csv_file:
         resultreader = csv.reader(csv_file)
         header = next(resultreader)  
         for row in resultreader:
-            if row[2] == number:
+            if int(row[2]) == number:
                 print(row)
                 dte1 = row[0]
-                prls1 = row[1]
-                print(f" {dte1} {prls1} ")
-#Creating functions that will determine the row where the max profit change, max loss change occur(not working as of 9/29 :-())
+                chng1 = row[2]
+                print(f" {dte1} ($ {chng1} ) ")
+
 def grDec(number):
     with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv", mode='r') as csv_file:
         resultreader = csv.reader(csv_file)
         header = next(resultreader)  
         for row in resultreader:
-            if row[2] == number:
+            if int(row[2]) == number:
                 dte2 = row[0]
-                prls2 = row[1]
-                print(f" {dte2} {prls2} ")
+                chng2 = row[2]
+                print(f" {dte2} ($ {chng2} )")
   
 #create the results
 with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv", mode='r') as csv_file:
@@ -69,13 +70,9 @@ with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\
     for row in resultreader: 
         count = count + 1
         total = total + int(row[1])
-        avgCh = round(change2/(len(chng)-1), 2) 
-        gprInc = max(chng)
-        gprDec = min(chng)
-        if row[2] == max(chng):
-            print(row)
+        avgCh = round(change2/(len(chng)-1), 2)
+#        print(row)
         
-
 # writing the output to a text file inside Analysis folder. 
 o = open(r'C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Analysis\outfile','w')
 
@@ -84,8 +81,8 @@ print("---------------------------------", file=o)
 print("Total Months: " + str(count), file=o)
 print("Total: " + "$" + str(total), file=o)          
 print("Average Change: " + "$" + str(round(change2/(len(chng)-1), 2)), file=o)
-print("Greatest Increase in Profits: " + "$" + str(grInc(max(chng))), file=o)
-print("Greatest Decrease in Profits: " + "$" + str(grDec(min(chng))), file=o)
+print("Greatest Increase in Profits: " + str(grInc(max(chng))), file=o)
+print("Greatest Decrease in Profits: " + str(grDec(min(chng))), file=o)
 print("output to txtfile successful")
 o.close()
 
