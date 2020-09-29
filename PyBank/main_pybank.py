@@ -1,107 +1,96 @@
 count = 0
 total = 0
+Date = []
+PrLss = []
 chng = []
 change = 867884
 change1 = 0
 change2 = 0
 change3 = 0
-# create a new file with columns Date, Profit/Losses, Change. Use Udemyzip as example. 
+#calculating count, total. Populating the list named chng[]
+import os
 import csv
 with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data.csv", mode='r') as csv_file:
-    reader = csv.reader(csv_file)
-    header = next(reader)   
-    for row in reader: 
-        count = count + 1
-        total = total + int(row[1])
+    inptreader = csv.reader(csv_file)
+    header = next(inptreader)   
+    for row in inptreader: 
         change = int(row[1]) - change + change1
         change1 = change - int(row[1])
         change2 = change2+change
         chng.append(change)
-#        row.append(chng)
-#print(row) -- I am trying to append this list to row of reader. Like row[0] is date row[1] is profit/losses, row[2] is chng
-
-#Trying something like this. can I print the month if I get output in this format?
-#updatedfile = zip(Date, prls, chng)
-#print(tuple(updatedfile))
-        
-#print(chng)--- this prints out the new list chng[]
-
-
-#This function takes in a list, i.e row which has 2 columns and adds the 3rd
-# column 'chng'
-
-def transform_row(list):
-    row.append(list)
-    
-def add_clmn_to_csv(inputfile, outputfile,transform_row):
-    with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data.csv", mode='r') as read_obj, \
-        open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_v1.csv", mode='w', newline='') as write_obj:
-            reader = csv.reader(read_obj)
-            header = next(reader)
-            writer = csv.writer(write_obj)
-            for row in reader:
-                transform_row(row, reader.line_num)
-                writer.writerow(row)
-
-
-#def transform_row(change, change1):
-        #    change = 867884 for this budget data
-        #    change1 = 0 for this budget data
-#        for row in reader: 
-#            change = int(row[1]) - change + change1
-#            change1 = change - int(row[1])
-#            chng.append(change)
-#           print(chng)
-    
-       
-
-def add_clmn(infile, outfile, updt_row, update_column_names):
-    with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data.csv", mode='r') as read_obj, \
-        open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_v1.csv", mode='w', newline='') as write_obj:
-            dict_reader = DictReader(read_obj)
-            column_names = dict_reader.fieldnames
-            update_column_names(column_names)
-            dict_writer = DictWriter(write_obj, column_names)
-            dict_writer.writeheader()
-            # Read each row of the input csv file as list
-            for row in dict_reader:
-                # Modify the dictionary / row by passing it to the transform function (the callback)
-                transform_row(row, dict_reader_reader.line_num)
-                # Write the updated dictionary/row to the output file
-                dict_writer.writerow(row)
-add_clmn(infile, outfile, updt_row, update_column_names)    
-
-
-#print(len(row[0])) --- this prints out 8. how?
-#print(len(row)) --- this just means there are 2 columns in the row
 #print(chng)
-#print(min(chng))
-#print(max(chng))
-         
-# I have to update this script to write the months against the grt inc, dec in profits. My thinking
-# is to write a column using chng[] to the original file. then using the index of these values to
-# find the corresponding months. Need help here!!
-            
+#creating 2 more lists namely Date, PrLss
+        Date.append(row[0]) 
+        PrLss.append(row[1])
+        
+# Zip lists together
+ziplistsfornewcsv = zip(Date, PrLss, chng)   
 
-print("Financial Analysis")
-print("---------------------------------")
-print("Total Months: " + str(count))
-print("Total: " + str(total))          
-print("Average Change: " + str((change2/(len(chng)-1), 2)))
-print("Greatest Increase in Profits: " + str(max(chng)))
-print("Greatest Decrease in Profits: " + str(min(chng)))
+#Now writing to a new csv     
+#set variable for outputfile
+outputwrtr = os.path.join(r'C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv')
+#  Open the output file
+with open(outputwrtr, "w", newline="") as datafile:
+    writer = csv.writer(datafile)
+    # Write the header row
+    writer.writerow(["Date", "Profit/Losses", "Difference"])
+    # Write in zipped rows
+    writer.writerows(ziplistsfornewcsv)
+print("File write successful")
 
-python main_pybank.py >> text.log
+#Creating functions that will determine the row where the max profit change, max loss change occur(not working as of 9/29 :-())
 
-# Read in the new CSV file, find the grtPrfInc, grpPrfDec
-with open(r"C:...budget_data_1.csv", mode='r') as csvfile:
-    # Split the data on commas
-    bd_1reader = csv.reader(csvfile, delimiter=',')
-    header = next(bd_1reader)
-    # Loop through the data
-    for row in bd_1reader:
-        # If max(chng), min(chng) are in row[2] is equal to that which the user input, run the 'print_percentages()' function
-        if max == row[2]:
-            print(row)
-        if min == row[2]:
-            print(row)
+def grInc(number):
+    with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv", mode='r') as csv_file:
+        resultreader = csv.reader(csv_file)
+        header = next(resultreader)  
+        for row in resultreader:
+            if row[2] == number:
+                print(row)
+                dte1 = row[0]
+                prls1 = row[1]
+                print(f" {dte1} {prls1} ")
+#Creating functions that will determine the row where the max profit change, max loss change occur(not working as of 9/29 :-())
+def grDec(number):
+    with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv", mode='r') as csv_file:
+        resultreader = csv.reader(csv_file)
+        header = next(resultreader)  
+        for row in resultreader:
+            if row[2] == number:
+                dte2 = row[0]
+                prls2 = row[1]
+                print(f" {dte2} {prls2} ")
+  
+#create the results
+with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv", mode='r') as csv_file:
+    resultreader = csv.reader(csv_file)
+    header = next(resultreader)   
+    for row in resultreader: 
+        count = count + 1
+        total = total + int(row[1])
+        avgCh = round(change2/(len(chng)-1), 2) 
+        gprInc = max(chng)
+        gprDec = min(chng)
+#print(row[2])
+# writing the output to a text file inside Analysis folder. 
+o = open(r'C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Analysis\outfile','w')
+
+print("Financial Analysis", file=o)
+print("---------------------------------", file=o)
+print("Total Months: " + str(count), file=o)
+print("Total: " + "$" + str(total), file=o)          
+print("Average Change: " + "$" + str(round(change2/(len(chng)-1), 2)), file=o)
+print("Greatest Increase in Profits: " + "$" + str(grInc(max(chng))), file=o)
+print("Greatest Decrease in Profits: " + "$" + str(grDec(min(chng))), file=o)
+print("output to txtfile successful")
+o.close()
+
+
+
+
+
+
+
+
+
+
