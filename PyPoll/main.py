@@ -1,10 +1,13 @@
 count = 0
 cnd = []
 cnewlist =[]
+
 #calculating count, total. Populating the list named chng[]
 import os
 import csv
-from collections import Counter
+import collections
+import operator
+from collections import Counter, OrderedDict
 #create the results
 with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyPoll\Resources\election_data.csv", mode='r') as csv_file:
     pollreader = csv.reader(csv_file)
@@ -25,17 +28,12 @@ cset = set(cnd)
 cnewlist = list(cset)
 #print(cnewlist)
 # This will produce a dict that looks like Counter({'khan':2218231, ....})
-countofeachcandidate = Counter(cnd)
-#print(countofeachcandidate)
+vtpercandidate = Counter(cnd)
+#print(vtpercandidate)
+#This is the summary of poll results***
+for x in vtpercandidate:
+    print(f"{x}:  {(round(((vtpercandidate[x]/count)*100),4))}%  ({vtpercandidate[x]})")
 
-#creating an accessible list out of the list cnd
-
-    
-#k = countofeachcandidate.most_common()
-#print(k)
-
-#print(k[0])
-#print(k[1])
 
 #This is another way to find distinct candidates       
 #def unique(candidateslist): 
@@ -60,8 +58,11 @@ print("Election Results", file=o)
 print("---------------------------------", file=o)
 print("Total Votes: " + str(count), file=o)
 print("---------------------------------", file=o)
-cnd1 = cnewlist
-for cand in cnd1:
-    print(cand, countofeachcandidate[cand], file=o )
+for x in vtpercandidate:
+    print(f"{x}:  {(round(((vtpercandidate[x]/count)*100),4))}%  ({vtpercandidate[x]})", file=o)
+print("---------------------------------", file=o)
+print("Winner: " + x[0], file=o)
+print("---------------------------------", file=o)
+print("output to txtfile successful")
 o.close()
 
