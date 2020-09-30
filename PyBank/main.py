@@ -48,10 +48,9 @@ def grInc(number):
         header = next(resultreader)  
         for row in resultreader:
             if int(row[2]) == number:
-                print(row)
                 dte1 = row[0]
                 chng1 = row[2]
-                print(f" {dte1} ($ {chng1} ) ")
+                return(f" {dte1} ($ {chng1} ) ")
 
 def grDec(number):
     with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv", mode='r') as csv_file:
@@ -61,7 +60,7 @@ def grDec(number):
             if int(row[2]) == number:
                 dte2 = row[0]
                 chng2 = row[2]
-                print(f" {dte2} ($ {chng2} )")
+                return(f" {dte2} ($ {chng2} )")
   
 #create the results
 with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Resources\budget_data_1.csv", mode='r') as csv_file:
@@ -72,7 +71,8 @@ with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\
         total = total + int(row[1])
         avgCh = round(change2/(len(chng)-1), 2)
 #        print(row)
-        
+mx = grInc(max(chng))  
+mn = grDec(min(chng))      
 # writing the output to a text file inside Analysis folder. 
 o = open(r'C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyBank\Analysis\outfile','w')
 
@@ -80,9 +80,9 @@ print("Financial Analysis", file=o)
 print("---------------------------------", file=o)
 print("Total Months: " + str(count), file=o)
 print("Total: " + "$" + str(total), file=o)          
-print("Average Change: " + "$" + str(round(change2/(len(chng)-1), 2)), file=o)
-print("Greatest Increase in Profits: " + str(grInc(max(chng))), file=o)
-print("Greatest Decrease in Profits: " + str(grDec(min(chng))), file=o)
+print("Average Change: " + "$" + str(avgCh), file=o)   
+print("Greatest Increase in Profits: " + mx, file=o)
+print("Greatest Decrease in Profits: " + mn, file=o)
 print("output to txtfile successful")
 o.close()
 
