@@ -7,7 +7,7 @@ import os
 import csv
 import collections
 import operator
-from collections import Counter, OrderedDict
+#from collections import Counter, OrderedDict
 #create the results
 with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyPoll\Resources\election_data.csv", mode='r') as csv_file:
     pollreader = csv.reader(csv_file)
@@ -34,6 +34,8 @@ vtpercandidate = Counter(cnd)
 for x in vtpercandidate:
     print(f"{x}:  {(round(((vtpercandidate[x]/count)*100),4))}%  ({vtpercandidate[x]})")
 
+w = vtpercandidate.most_common(1)[0][0]
+print(w)
 
 #This is another way to find distinct candidates       
 #def unique(candidateslist): 
@@ -61,7 +63,7 @@ print("---------------------------------", file=o)
 for x in vtpercandidate:
     print(f"{x}:  {(round(((vtpercandidate[x]/count)*100),4))}%  ({vtpercandidate[x]})", file=o)
 print("---------------------------------", file=o)
-print("Winner: " + x[0], file=o)
+print("Winner: " + w, file=o)
 print("---------------------------------", file=o)
 print("output to txtfile successful")
 o.close()
