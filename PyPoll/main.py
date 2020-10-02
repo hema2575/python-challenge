@@ -3,59 +3,34 @@ cnd = []
 cnewlist =[]
 
 #calculating count, total. Populating the list named chng[]
-import os
 import csv
 import collections
-import operator
-#from collections import Counter, OrderedDict
-#create the results
+#Find total votes cast, create list cnd[]
 with open(r"C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyPoll\Resources\election_data.csv", mode='r') as csv_file:
     pollreader = csv.reader(csv_file)
     header = next(pollreader)   
     for row in pollreader: 
         count = count + 1
         cnd.append(row[2])
-#print(count)
-
-
-#Create a key-value pair of cset, the dict. Key = cset,Value= total number of votes 
-#This is the list created out of row[2] which is candidates
-#print(cnd)
-#using set to get a dictionary of unique candidates
-cset = set(cnd)
-#print(cset) 
-#Converting the dictionary of unique candidates to a list
-cnewlist = list(cset)
-#print(cnewlist)
-# This will produce a dict that looks like Counter({'khan':2218231, ....})
-vtpercandidate = Counter(cnd)
-#print(vtpercandidate)
-#This is the summary of poll results***
+# This will produce a dict that looks like Counter({'khan':2218231, ....}). We will use this to create the summary of poll results.
+vtpercandidate = collections.Counter(cnd)
+#Determine the winner
+w = vtpercandidate.most_common(1)[0][0]
+#Create results
+print("\n")
+print("Election Results")
+print("---------------------------------")
+print("Total Votes: " + str(count))
+print("---------------------------------")    
 for x in vtpercandidate:
     print(f"{x}:  {(round(((vtpercandidate[x]/count)*100),4))}%  ({vtpercandidate[x]})")
-
-w = vtpercandidate.most_common(1)[0][0]
-print(w)
-
-#This is another way to find distinct candidates       
-#def unique(candidateslist): 
-    # intilize a null list intended to be unique list
-#    cndte = [] 
-     
-    # traverse for all elements 
-#    for x in candidateslist: 
-        # check if exists in the unique list or not 
-#        if x not in cndte:
-#            cndte.append(x)
-#    print(cndte)
-
-#unique(cnd)  
-
-
+print("---------------------------------")
+print("Winner: " + w)
+print("---------------------------------")
 
 # writing the output to a text file inside Analysis folder. 
 o = open(r'C:\Users\muthukumar\Desktop\02_SaveNWBCSHere\03_Activities&HW\Week3\python-challenge\PyPoll\Analysis\outfile','w')
-
+print("\n")
 print("Election Results", file=o)
 print("---------------------------------", file=o)
 print("Total Votes: " + str(count), file=o)
@@ -65,6 +40,7 @@ for x in vtpercandidate:
 print("---------------------------------", file=o)
 print("Winner: " + w, file=o)
 print("---------------------------------", file=o)
+print("\n")
 print("output to txtfile successful")
 o.close()
 
